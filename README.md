@@ -19,5 +19,11 @@ Algumas das ferramentas utilizadas para o desenvolvimento deste projeto são:
 - Sequelize (Utilizando PostgreSQL);
 - JWT + Bcrypt
 
-## Funcionalidades
+## Funcionalidades da aplicação
+
+1. Cadastro de usuários - Esta funcionalidade é responsável por cadastrar os usuários que terão acesso ao sistema (administradores).
+
+2. Autenticação de usuários - Esta funcionalidade é responsável por autenticar o acesso dos usuários cadastrados para que estes possam ter acesso às funcionalidades de edição de dados do usuário, cadastro e edição de destinatários.
+
+3. Cadastro e edição de destinatários - Esta funcionalidade permite cadastrar e editar destinatários da transportadora. Esta funcionalidade é acessível apenas para usuários que estejam autenticados no sistema.
 
