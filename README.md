@@ -29,7 +29,7 @@ Algumas das ferramentas utilizadas para o desenvolvimento deste projeto são:
 
 ## Funcionalidades da aplicação
 
-**1.*Cadastro de usuários** - Esta funcionalidade é responsável por cadastrar os usuários que terão acesso ao sistema (administradores).
+**1.Cadastro de usuários** - Esta funcionalidade é responsável por cadastrar os usuários que terão acesso ao sistema (administradores).
 
 **2. Autenticação de usuários** - Esta funcionalidade é responsável por autenticar o acesso dos usuários cadastrados para que estes possam ter acesso às funcionalidades de edição de dados do usuário, cadastro e edição de destinatários.
 
