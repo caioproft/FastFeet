@@ -2,6 +2,13 @@
   <img alt="Fastfeet" src="https://github.com/Rocketseat/bootcamp-gostack-desafio-02/blob/master/.github/logo.png" width="300px" />
 </h1>
 
+
+<p align="center">
+  <a href="#sobre-o-projeto">Sobre o projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#ferramentas-utilizadas">Ferramentas utilizadas</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#funcionalidades-da-aplicação">Funcionalidades</a>
+</p>
+
 Este projeto é dedicado à construção da aplicação FastFeet que será utilizada como avalição no Bootcamp GoStack da Rocketseat
 
 
@@ -17,6 +24,7 @@ Algumas das ferramentas utilizadas para o desenvolvimento deste projeto são:
 - Sucrase + Nodemon;
 - ESLint + Prettier + EditorConfig;
 - Sequelize (Utilizando PostgreSQL);
+- Docker
 - JWT + Bcrypt
 
 ## Funcionalidades da aplicação
