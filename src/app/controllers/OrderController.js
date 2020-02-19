@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
+import File from '../models/File';
 
 class OrderController {
   async store(req, res) {
@@ -38,6 +39,44 @@ class OrderController {
     const { id, product } = await Order.create(req.body);
 
     return res.json({ id, recipient_id, deliveryman_id, product });
+  }
+
+  async index(req, res) {
+    const { page } = req.query;
+
+    const orders = await Order.findAll({
+      attributes: ['id', 'product', 'canceled_at', 'start_date', 'end_date'],
+      limit: 20,
+      offset: (page - 1) * 20,
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: File,
+              as: 'signature',
+              attributes: ['id', 'path', 'url'],
+            },
+          ],
+        },
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'path', 'url'],
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.json(orders);
   }
 }
 

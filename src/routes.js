@@ -30,5 +30,6 @@ routes.get('/deliverymans', DeliverymanController.index);
 routes.delete('/deliverymans/:id', DeliverymanController.delete);
 
 routes.post('/orders', OrderController.store);
+routes.get('/orders', OrderController.index);
 
 export default routes;
