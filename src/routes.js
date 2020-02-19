@@ -6,6 +6,7 @@ import UserController from './app/controllers/UserController';
 import RecipientController from './app/controllers/RecipientController';
 import FileController from './app/controllers/FileController';
 import DeliverymanController from './app/controllers/DeliverymanController';
+import OrderController from './app/controllers/OrderController';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
@@ -27,5 +28,7 @@ routes.post('/deliverymans', DeliverymanController.store);
 routes.put('/deliverymans/:id', DeliverymanController.update);
 routes.get('/deliverymans', DeliverymanController.index);
 routes.delete('/deliverymans/:id', DeliverymanController.delete);
+
+routes.post('/orders', OrderController.store);
 
 export default routes;
