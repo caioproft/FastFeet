@@ -77,11 +77,16 @@ class RecipientController {
       }
     }
 
-    const { street, number, state, city, cep } = await recipient.update(
-      req.body
-    );
+    const {
+      street,
+      number,
+      state,
+      city,
+      cep,
+      signature_id,
+    } = await recipient.update(req.body);
 
-    return res.json({ name, street, number, state, city, cep });
+    return res.json({ name, street, number, state, city, cep, signature_id });
   }
 }
 
