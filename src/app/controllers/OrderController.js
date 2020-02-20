@@ -38,6 +38,21 @@ class OrderController {
 
     const { id, product } = await Order.create(req.body);
 
+    const order = await Order.findByPk(id, {
+      include: [
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['name', 'email'],
+        },
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: ['name', 'street', 'number', 'state', 'city', 'cep'],
+        },
+      ],
+    });
+
     return res.json({ id, recipient_id, deliveryman_id, product });
   }
 
