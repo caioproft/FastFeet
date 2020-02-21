@@ -3,6 +3,7 @@ import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
+import Mail from '../../lib/mail';
 
 class OrderController {
   async store(req, res) {
@@ -48,9 +49,23 @@ class OrderController {
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['name', 'street', 'number', 'state', 'city', 'cep'],
+          attributes: ['name', 'street', 'number', 'cep'],
         },
       ],
+    });
+
+    await Mail.sendMail({
+      to: `${order.deliveryman.name} <${order.deliveryman.email}>`,
+      subject: 'Nova encomenda disponível para entrega.',
+      template: 'deliverynotice',
+      context: {
+        deliveryman: order.deliveryman.name,
+        product: order.product,
+        recipient: order.recipient.name,
+        address: order.recipient.street,
+        number: order.recipient.number,
+        cep: order.recipient.cep,
+      },
     });
 
     return res.json({ id, recipient_id, deliveryman_id, product });
