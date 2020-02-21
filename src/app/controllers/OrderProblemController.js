@@ -1,6 +1,9 @@
 import * as Yup from 'yup';
 import OrderProblem from '../models/OrderProblem';
 import Order from '../models/Order';
+import Mail from '../../lib/mail';
+import Deliveryman from '../models/Deliveryman';
+import Recipient from '../models/Recipient';
 
 class OrderProblemController {
   async index(req, res) {
@@ -68,11 +71,38 @@ class OrderProblemController {
 
     const { order_id } = orderProblem;
 
-    const order = await Order.findByPk(order_id);
+    const order = await Order.findByPk(order_id, {
+      include: [
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['name', 'email'],
+        },
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: ['name', 'street', 'number', 'cep'],
+        },
+      ],
+    });
 
     order.canceled_at = new Date();
 
     await order.save();
+
+    await Mail.sendMail({
+      to: `${order.deliveryman.name} <${order.deliveryman.email}>`,
+      subject: 'Entrega de encomenda cancelada.',
+      template: 'ordercancellation',
+      context: {
+        deliveryman: order.deliveryman.name,
+        product: order.product,
+        recipient: order.recipient.name,
+        address: order.recipient.street,
+        number: order.recipient.number,
+        cep: order.recipient.cep,
+      },
+    });
 
     return res.json(orderProblem);
   }
