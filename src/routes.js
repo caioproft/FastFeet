@@ -41,5 +41,6 @@ routes.delete(
   '/problems/:problemId/cancel-order',
   OrderProblemController.delete
 );
+routes.get('/orders/:orderId/problems', OrderProblemController.show);
 
 export default routes;

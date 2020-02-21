@@ -29,6 +29,31 @@ class OrderProblemController {
     return res.json(ordersProblems);
   }
 
+  async show(req, res) {
+    const order = await Order.findByPk(req.params.orderId);
+
+    if (!order) {
+      return res
+        .status(400)
+        .json({ error: 'Não existe encomenda cadastrada com esse ID.' });
+    }
+
+    const orderProblems = await OrderProblem.findAll({
+      where: {
+        order_id: req.params.orderId,
+      },
+      attributes: ['id', 'description'],
+    });
+
+    if (orderProblems.length === 0) {
+      return res.status(400).json({
+        error: 'Não existem problemas relacionados à esta encomenda.',
+      });
+    }
+
+    return res.json(orderProblems);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       description: Yup.string().required(),
@@ -68,6 +93,12 @@ class OrderProblemController {
     const orderProblem = await OrderProblem.findByPk(problemId, {
       attributes: ['id', 'description', 'order_id'],
     });
+
+    if (!orderProblem) {
+      return res
+        .status(400)
+        .json({ error: 'Não há problema cadastrado com esse ID.' });
+    }
 
     const { order_id } = orderProblem;
 
