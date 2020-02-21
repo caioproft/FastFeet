@@ -58,6 +58,24 @@ class OrderProblemController {
 
     return res.json({ id, orderId, description });
   }
+
+  async delete(req, res) {
+    const { problemId } = req.params;
+
+    const orderProblem = await OrderProblem.findByPk(problemId, {
+      attributes: ['id', 'description', 'order_id'],
+    });
+
+    const { order_id } = orderProblem;
+
+    const order = await Order.findByPk(order_id);
+
+    order.canceled_at = new Date();
+
+    await order.save();
+
+    return res.json(orderProblem);
+  }
 }
 
 export default new OrderProblemController();

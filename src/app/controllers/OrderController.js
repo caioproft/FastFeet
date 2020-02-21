@@ -170,11 +170,9 @@ class OrderController {
         .json({ error: 'Não existe encomenda cadastrada com esse ID.' });
     }
 
-    order.canceled_at = new Date();
+    await Order.destroy({ where: { id } });
 
-    await order.save();
-
-    return res.json(order);
+    return res.json({ message: 'Registro de encomenda excluído.' });
   }
 }
 
