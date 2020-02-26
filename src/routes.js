@@ -9,6 +9,8 @@ import DeliverymanController from './app/controllers/DeliverymanController';
 import OrderController from './app/controllers/OrderController';
 import OrderProblemController from './app/controllers/OrderProblemController';
 import DeliverymanOrderController from './app/controllers/DeliverymanOrderController';
+import OrderDeliveredController from './app/controllers/OrderDeliveredController';
+import OrderRetrivedController from './app/controllers/OrderRetrivedController';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
@@ -19,6 +21,13 @@ routes.post('/users', UserController.store);
 
 routes.post('/orders/:orderId/problems', OrderProblemController.store);
 routes.get('/deliveryman/:id/orders', DeliverymanOrderController.index);
+routes.get('/deliveryman/:id/orders-delivered', OrderDeliveredController.index);
+routes.put(
+  '/orders/:orderId/end-order',
+  upload.single('file'),
+  OrderDeliveredController.update
+);
+routes.put('/orders/:orderId/start-order', OrderRetrivedController.update);
 
 routes.use(authMiddleware);
 
