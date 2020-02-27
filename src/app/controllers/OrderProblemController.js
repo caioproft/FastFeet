@@ -1,9 +1,10 @@
 import * as Yup from 'yup';
 import OrderProblem from '../models/OrderProblem';
 import Order from '../models/Order';
-import Mail from '../../lib/mail';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
+import Queue from '../../lib/Queue';
+import DeliveryCancellationMail from '../jobs/DeliveryCancellationMail';
 
 class OrderProblemController {
   async index(req, res) {
@@ -121,19 +122,7 @@ class OrderProblemController {
 
     await order.save();
 
-    await Mail.sendMail({
-      to: `${order.deliveryman.name} <${order.deliveryman.email}>`,
-      subject: 'Entrega de encomenda cancelada.',
-      template: 'ordercancellation',
-      context: {
-        deliveryman: order.deliveryman.name,
-        product: order.product,
-        recipient: order.recipient.name,
-        address: order.recipient.street,
-        number: order.recipient.number,
-        cep: order.recipient.cep,
-      },
-    });
+    await Queue.add(DeliveryCancellationMail.key, { order });
 
     return res.json(orderProblem);
   }
